@@ -1,0 +1,442 @@
+‎<!DOCTYPE html>
+‎<html lang="es">
+‎<head>
+‎    <meta charset="UTF-8">
+‎    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+‎    <title>Nuestra Boda | Invitación Digital</title>
+‎    <!-- Google Fonts -->
+‎    <link rel="preconnect" href="https://fonts.googleapis.com">
+‎    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+‎    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+‎    
+‎    <style>
+‎        :root {
+‎            --verde-salvia: #4A5D4E;
+‎            --crema: #FAF8F5;
+‎            --dorado-suave: #D4AF37;
+‎            --blanco: #FFFFFF;
+‎            --texto-oscuro: #2C3E35;
+‎        }
+‎
+‎        * {
+‎            box-sizing: border-box;
+‎            margin: 0;
+‎            padding: 0;
+‎        }
+‎
+‎        body {
+‎            font-family: 'Montserrat', sans-serif;
+‎            background-color: var(--crema);
+‎            color: var(--texto-oscuro);
+‎            line-height: 1.6;
+‎            text-align: center;
+‎        }
+‎
+‎        h1, h2, h3 {
+‎            font-family: 'Playfair Display', serif;
+‎        }
+‎
+‎        .container {
+‎            max-width: 600px;
+‎            margin: 0 auto;
+‎            padding: 20px;
+‎        }
+‎
+‎        /* Hero Section */
+‎        .hero {
+‎            min-height: 90vh;
+‎            display: flex;
+‎            flex-direction: column;
+‎            justify-content: center;
+‎            align-items: center;
+‎            background: linear-gradient(rgba(250, 248, 245, 0.85), rgba(250, 248, 245, 0.85)), url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+‎            border-bottom: 2px solid var(--dorado-suave);
+‎            padding: 40px 20px;
+‎        }
+‎
+‎        .hero h1 {
+‎            font-size: 2.5rem;
+‎            color: var(--verde-salvia);
+‎            margin-bottom: 10px;
+‎        }
+‎
+‎        .hero p.fecha {
+‎            font-size: 1.2rem;
+‎            letter-spacing: 2px;
+‎            color: var(--dorado-suave);
+‎            margin-bottom: 30px;
+‎            font-weight: 600;
+‎        }
+‎
+‎        /* Reproductor Audio */
+‎        .audio-btn {
+‎            background-color: var(--verde-salvia);
+‎            color: var(--blanco);
+‎            border: none;
+‎            padding: 12px 24px;
+‎            border-radius: 30px;
+‎            cursor: pointer;
+‎            font-size: 0.9rem;
+‎            display: inline-flex;
+‎            align-items: center;
+‎            gap: 10px;
+‎            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+‎            transition: all 0.3s ease;
+‎        }
+‎
+‎        .audio-btn:hover {
+‎            background-color: var(--dorado-suave);
+‎        }
+‎
+‎        /* Secciones Generales */
+‎        section {
+‎            padding: 50px 20px;
+‎            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+‎        }
+‎
+‎        .section-title {
+‎            font-size: 1.8rem;
+‎            color: var(--verde-salvia);
+‎            margin-bottom: 25px;
+‎            position: relative;
+‎        }
+‎
+‎        .section-title::after {
+‎            content: '';
+‎            display: block;
+‎            width: 50px;
+‎            height: 2px;
+‎            background-color: var(--dorado-suave);
+‎            margin: 10px auto 0;
+‎        }
+‎
+‎        /* Cuenta Regresiva */
+‎        .timer-grid {
+‎            display: grid;
+‎            grid-template-columns: repeat(4, 1fr);
+‎            gap: 10px;
+‎            margin-top: 20px;
+‎        }
+‎
+‎        .timer-block {
+‎            background-color: var(--blanco);
+‎            padding: 15px 5px;
+‎            border-radius: 8px;
+‎            border: 1px solid var(--dorado-suave);
+‎        }
+‎
+‎        .timer-number {
+‎            font-size: 1.5rem;
+‎            font-weight: 600;
+‎            color: var(--verde-salvia);
+‎            display: block;
+‎        }
+‎
+‎        .timer-label {
+‎            font-size: 0.75rem;
+‎            text-transform: uppercase;
+‎        }
+‎
+‎        /* Tarjetas de Ubicación e Itinerario */
+‎        .card {
+‎            background-color: var(--blanco);
+‎            padding: 25px;
+‎            border-radius: 12px;
+‎            margin-bottom: 20px;
+‎            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+‎            border: 1px solid #EAE6DF;
+‎        }
+‎
+‎        .btn-link {
+‎            display: inline-block;
+‎            background-color: var(--verde-salvia);
+‎            color: var(--blanco);
+‎            text-decoration: none;
+‎            padding: 10px 20px;
+‎            border-radius: 20px;
+‎            margin-top: 15px;
+‎            font-size: 0.85rem;
+‎            transition: 0.3s;
+‎        }
+‎
+‎        .btn-link:hover {
+‎            background-color: var(--dorado-suave);
+‎        }
+‎
+‎        /* Timeline Vertical */
+‎        .timeline {
+‎            position: relative;
+‎            margin: 20px auto;
+‎            text-align: left;
+‎        }
+‎
+‎        .timeline-item {
+‎            padding: 15px 0 15px 30px;
+‎            border-left: 2px solid var(--dorado-suave);
+‎            position: relative;
+‎        }
+‎
+‎        .timeline-item::before {
+‎            content: '';
+‎            position: absolute;
+‎            left: -6px;
+‎            top: 22px;
+‎            width: 10px;
+‎            height: 10px;
+‎            border-radius: 50%;
+‎            background-color: var(--verde-salvia);
+‎        }
+‎
+‎        .timeline-time {
+‎            font-weight: 600;
+‎            color: var(--dorado-suave);
+‎        }
+‎
+‎        /* Galería */
+‎        .gallery-grid {
+‎            display: grid;
+‎            grid-template-columns: repeat(2, 1fr);
+‎            gap: 10px;
+‎        }
+‎
+‎        .gallery-grid img {
+‎            width: 100%;
+‎            height: 180px;
+‎            object-fit: cover;
+‎            border-radius: 8px;
+‎            cursor: pointer;
+‎            transition: transform 0.3s ease;
+‎        }
+‎
+‎        .gallery-grid img:hover {
+‎            transform: scale(1.03);
+‎        }
+‎
+‎        /* Protocolo */
+‎        .protocol-box {
+‎            background-color: #EFECE6;
+‎            border-left: 4px solid var(--verde-salvia);
+‎            padding: 15px;
+‎            margin-top: 15px;
+‎            font-size: 0.9rem;
+‎            font-weight: 600;
+‎        }
+‎
+‎        /* RSVP Button */
+‎        .btn-rsvp {
+‎            background-color: var(--dorado-suave);
+‎            color: var(--blanco);
+‎            font-size: 1.1rem;
+‎            padding: 15px 35px;
+‎            border-radius: 30px;
+‎            text-decoration: none;
+‎            display: inline-block;
+‎            font-weight: 600;
+‎            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+‎            transition: 0.3s;
+‎        }
+‎
+‎        .btn-rsvp:hover {
+‎            transform: translateY(-2px);
+‎            background-color: var(--verde-salvia);
+‎        }
+‎    </style>
+‎</head>
+‎<body>
+‎
+‎    <audio id="bg-audio" loop>
+‎        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+‎    </audio>
+‎
+‎    <div class="container">
+‎
+‎        <!-- 1. HERO SECTION -->
+‎        <header class="hero">
+‎            <h1>María & Carlos</h1>
+‎            <p class="fecha">31 . 12 . 2026</p>
+‎            <button class="audio-btn" id="audio-toggle">
+‎                <span>🎵 Activar Música</span>
+‎            </button>
+‎        </header>
+‎
+‎        <!-- 2. CUENTA REGRESIVA -->
+‎        <section>
+‎            <h2 class="section-title">Faltan Muy Poco</h2>
+‎            <div class="timer-grid">
+‎                <div class="timer-block">
+‎                    <span class="timer-number" id="days">00</span>
+‎                    <span class="timer-label">Días</span>
+‎                </div>
+‎                <div class="timer-block">
+‎                    <span class="timer-number" id="hours">00</span>
+‎                    <span class="timer-label">Horas</span>
+‎                </div>
+‎                <div class="timer-block">
+‎                    <span class="timer-number" id="minutes">00</span>
+‎                    <span class="timer-label">Min</span>
+‎                </div>
+‎                <div class="timer-block">
+‎                    <span class="timer-number" id="seconds">00</span>
+‎                    <span class="timer-label">Seg</span>
+‎                </div>
+‎            </div>
+‎        </section>
+‎
+‎        <!-- 3. GEOLOCALIZACIÓN -->
+‎        <section>
+‎            <h2 class="section-title">Ubicaciones</h2>
+‎            <div class="card">
+‎                <h3>Ceremonia Religiosa</h3>
+‎                <p>Iglesia Matriz</p>
+‎                <p><small>17:00 HRS</small></p>
+‎                <a href="https://maps.google.com" target="_blank" class="btn-link">Ver en Google Maps</a>
+‎            </div>
+‎            <div class="card">
+‎                <h3>Recepción & Fiesta</h3>
+‎                <p>Quinta Quinta de Eventos</p>
+‎                <p><small>19:00 HRS</small></p>
+‎                <a href="https://maps.google.com" target="_blank" class="btn-link">Ver en Google Maps</a>
+‎            </div>
+‎        </section>
+‎
+‎        <!-- 4. ITINERARIO -->
+‎        <section>
+‎            <h2 class="section-title">Itinerario</h2>
+‎            <div class="timeline">
+‎                <div class="timeline-item">
+‎                    <div class="timeline-time">17:00 PM</div>
+‎                    <div>Ceremonia Religiosa</div>
+‎                </div>
+‎                <div class="timeline-item">
+‎                    <div class="timeline-time">19:00 PM</div>
+‎                    <div>Cóctel de Bienvenida</div>
+‎                </div>
+‎                <div class="timeline-item">
+‎                    <div class="timeline-time">20:30 PM</div>
+‎                    <div>Cena Protocolaria & Brindis</div>
+‎                </div>
+‎                <div class="timeline-item">
+‎                    <div class="timeline-time">22:00 PM</div>
+‎                    <div>Apertura de Baile & Fiesta</div>
+‎                </div>
+‎            </div>
+‎        </section>
+‎
+‎        <!-- 5. GALERÍA PREBODA -->
+‎        <section>
+‎            <h2 class="section-title">Nuestra Historia</h2>
+‎            <div class="gallery-grid">
+‎                <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=400&q=80" alt="Foto Preboda 1">
+‎                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80" alt="Foto Preboda 2">
+‎            </div>
+‎        </section>
+‎
+‎        <!-- 6. ÁLBUM COMPARTIDO -->
+‎        <section>
+‎            <h2 class="section-title">Álbum Compartido</h2>
+‎            <div class="card">
+‎                <p>¡Ayúdanos a capturar cada momento! Comparte tus fotos del evento aquí.</p>
+‎                <a href="https://photos.google.com" target="_blank" class="btn-link">Subir Fotos al Álbum</a>
+‎            </div>
+‎        </section>
+‎
+‎        <!-- 7. DRESS CODE Y PROTOCOLO -->
+‎        <section>
+‎            <h2 class="section-title">Código de Vestimenta</h2>
+‎            <p><strong>Rigurosa Etiqueta / Formal</strong></p>
+‎            <div class="protocol-box">
+‎                Evento exclusivo para adultos (Sin Niños)
+‎            </div>
+‎        </section>
+‎
+‎        <!-- 8. MESA DE REGALOS -->
+‎        <section>
+‎            <h2 class="section-title">Mesa de Regalos</h2>
+‎            <div class="card">
+‎                <p>El mejor regalo es tu presencia. Si deseas hacernos un obsequio, puedes contribuir a nuestra luna de miel:</p>
+‎                <br>
+‎                <p><strong>Banco:</strong> Banco Bolivariano</p>
+‎                <p><strong>Tipo de Cuenta:</strong> Ahorros / Corriente</p>
+‎                <p><strong>Número:</strong> 0000-000000-0</p>
+‎            </div>
+‎        </section>
+‎
+‎        <!-- 9. CONFIRMACIÓN RSVP -->
+‎        <section>
+‎            <h2 class="section-title">Confirmación</h2>
+‎            <p style="margin-bottom: 25px;">Por favor confirma tu asistencia antes del 1 de Noviembre.</p>
+‎            <a href="https://forms.google.com" target="_blank" class="btn-rsvp">Confirmar Asistencia</a>
+‎        </section>
+‎
+‎    </div>
+‎
+‎    <!-- SCRIPTS EN VIVO -->
+‎    <script>
+‎        // 1. Control del Reproductor de Audio
+‎        const audio = document.getElementById('bg-audio');
+‎        const audioBtn = document.getElementById('audio-toggle');
+‎        let isPlaying = false;
+‎
+‎        audioBtn.addEventListener('click', () => {
+‎            if (isPlaying) {
+‎                audio.pause();
+‎                audioBtn.innerHTML = '<span>🎵 Activar Música</span>';
+‎            } else {
+‎                audio.play();
+‎                audioBtn.innerHTML = '<span>⏸️ Pausar Música</span>';
+‎            }
+‎            isPlaying = !isPlaying;
+‎        });
+‎
+‎        // 2. Control de Cuenta Regresiva Sincronizada
+‎        const weddingDate = new Date("Dec 31, 2026 17:00:00").getTime();
+‎
+‎        const timer = setInterval(function() {
+‎            const now = new Date().getTime();
+‎            const distance = weddingDate - now;
+‎
+‎            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+‎            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+‎            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+‎            const seconds = Math.floor((Para desarrollar tu **Carta / Invitación Digital de Boda Elegante** cumpliendo con todo lo establecido en el documento, tienes **dos formas de llevarlo a cabo**:
+‎
+‎1. **Método Directo (Copiar y Pegar):** Usar el código HTML/CSS/JS ya maquetado que verás a continuación.
+‎2. **Método de Personalización:** Usar el **Prompt Maestro** extractado del PDF para pedirle a la IA que modifique nombres, fechas o estilos específicos.
+‎
+‎---
+‎
+‎### Opción 1: Código Web Listo para Usar
+‎
+‎Aquí tienes el código completo en un **único archivo** (HTML, CSS y JavaScript) basado en los requerimientos exactos de la propuesta técnica: paleta verde salvia, crema y dorado suave; tipografías *Playfair Display* y *Montserrat*; reproductor interactivo; contador; itinerario; dress code (solo adultos); mapas; mesa de regalos modal y formulario RSVP.
+‎
+‎Guarda el siguiente código en tu computadora como `index.html` y ábrelo en cualquier navegador web:
+‎
+‎```html
+‎<!DOCTYPE html>
+‎<html lang="es">
+‎<head>
+‎    <meta charset="UTF-8">
+‎    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+‎    <title>Nuestra Boda | Invitación Digital</title>
+‎    <!-- Tipografías de Google Fonts -->
+‎    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+‎    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+‎    <link href="[https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap](https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap)" rel="stylesheet">
+‎    <!-- Iconos FontAwesome -->
+‎    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
+‎    
+‎    <style>
+‎        :root {
+‎            --verde-salvia: #4A5D4E;
+‎            --crema: #FAF8F5;
+‎            --dorado: #D4AF37;
+‎            --blanco: #FFFFFF;
+‎            --texto-oscuro: #2C3E35;
+‎        }
+‎
+‎        * {
+‎            box-sizing: border-box;
+‎            margin: 0;
+‎            padding: 0;
+‎        
+‎
