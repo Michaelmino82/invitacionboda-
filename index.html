@@ -1,539 +1,819 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestra Boda | Michael & Mayerly</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --verde-salvia: #4A5D4E;
-            --crema: #FAF8F5;
-            --dorado: #D4AF37;
-            --dorado-suave: #D4AF3733;
-            --blanco: #FFFFFF;
-            --texto-oscuro: #2C3E35;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--crema);
-            color: var(--texto-oscuro);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* CONTENEDOR DE LA CARTA */
-        .envelope-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 420px;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .envelope {
-            position: relative;
-            width: 340px;
-            height: 240px;
-            background-color: #3e4e41;
-            border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            cursor: pointer;
-            transition: transform 0.4s ease;
-        }
-
-        .envelope:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Solapa superior del sobre */
-        .envelope::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 170px solid transparent;
-            border-right: 170px solid transparent;
-            border-top: 130px solid var(--verde-salvia);
-            transform-origin: top;
-            transition: transform 0.6s ease 0.2s, z-index 0.2s ease 0.2s;
-            z-index: 3;
-        }
-
-        /* Bolsillo inferior del sobre */
-        .envelope::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 170px solid #435447;
-            border-right: 170px solid #435447;
-            border-bottom: 120px solid #4a5c4f;
-            border-radius: 0 0 8px 8px;
-            z-index: 2;
-        }
-
-        /* Sello de Cera */
-        .wax-seal {
-            position: absolute;
-            top: 110px;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 65px;
-            height: 65px;
-            background: radial-gradient(circle, #e6c65c 0%, var(--dorado) 70%, #b38f24 100%);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.4);
-            z-index: 4;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-
-        .wax-seal span {
-            font-family: 'Alex Brush', cursive;
-            font-size: 1.8rem;
-            color: #4a3b0f;
-            font-weight: bold;
-        }
-
-        /* Animación al abrir */
-        .envelope.open::before {
-            transform: rotateX(180deg);
-            z-index: 0;
-        }
-
-        .envelope.open .wax-seal {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.5);
-            pointer-events: none;
-        }
-
-        /* TARJETA DE INVITACIÓN */
-        .card {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 310px;
-            background-color: var(--blanco);
-            border-radius: 6px;
-            padding: 30px 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 1px solid var(--dorado-suave);
-            text-align: center;
-            z-index: 1;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s, opacity 0.6s ease;
-            max-height: 220px;
-            overflow: hidden;
-        }
-
-        /* Estado expandido tras abrir */
-        .envelope-wrapper.expanded {
-            align-items: flex-start;
-            padding-top: 40px;
-            padding-bottom: 40px;
-        }
-
-        .envelope-wrapper.expanded .envelope {
-            display: none;
-        }
-
-        .envelope-wrapper.expanded .card {
-            position: relative;
-            bottom: auto;
-            left: auto;
-            transform: none;
-            width: 100%;
-            max-width: 420px;
-            max-height: none;
-            overflow: visible;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            border: 1px solid var(--dorado);
-            animation: fadeIn 0.8s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* CONTENIDO DE LA INVITACIÓN */
-        .card-header h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            letter-spacing: 3px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--verde-salvia);
-            margin-bottom: 10px;
-        }
-
-        .names {
-            font-family: 'Alex Brush', cursive;
-            font-size: 3.2rem;
-            color: var(--verde-salvia);
-            line-height: 1.1;
-            margin: 15px 0;
-        }
-
-        .names span {
-            display: block;
-            font-size: 1.8rem;
-            color: var(--dorado);
-            margin: -5px 0;
-        }
-
-        .divider {
-            height: 1px;
-            width: 80px;
-            background: linear-gradient(to right, transparent, var(--dorado), transparent);
-            margin: 20px auto;
-        }
-
-        .date-box {
-            margin: 20px 0;
-            padding: 10px 0;
-            border-top: 1px solid var(--dorado-suave);
-            border-bottom: 1px solid var(--dorado-suave);
-        }
-
-        .date-box .date {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--texto-oscuro);
-        }
-
-        /* Reproductor de Audio */
-        .audio-player {
-            margin: 20px 0;
-        }
-
-        .btn-audio {
-            background-color: var(--verde-salvia);
-            color: var(--blanco);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: background 0.3s;
-        }
-
-        .btn-audio:hover {
-            background-color: #38473b;
-        }
-
-        /* Cuenta Regresiva */
-        .timer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin: 25px 0;
-        }
-
-        .timer-block {
-            background-color: var(--crema);
-            padding: 10px 5px;
-            border-radius: 6px;
-            border: 1px solid var(--dorado-suave);
-        }
-
-        .timer-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--verde-salvia);
-            display: block;
-        }
-
-        .timer-label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            color: #777;
-        }
-
-        /* Secciones e Itinerario */
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            color: var(--verde-salvia);
-            margin: 30px 0 15px;
-        }
-
-        .timeline {
-            text-align: left;
-            margin: 20px 0;
-            padding-left: 20px;
-            border-left: 2px solid var(--dorado-suave);
-        }
-
-        .timeline-item {
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -26px;
-            top: 4px;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: var(--dorado);
-        }
-
-        .timeline-time {
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: var(--verde-salvia);
-        }
-
-        .timeline-desc {
-            font-size: 0.9rem;
-            color: #555;
-        }
-
-        /* Botones de Acción */
-        .btn-action {
-            display: inline-block;
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            background-color: var(--verde-salvia);
-            color: var(--blanco);
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-
-        .btn-action:hover {
-            background-color: var(--dorado);
-            color: var(--texto-oscuro);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--verde-salvia);
-            border: 1px solid var(--verde-salvia);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--verde-salvia);
-            color: var(--blanco);
-        }
-
-        /* Indicador de Tocar */
-        .tap-hint {
-            position: absolute;
-            bottom: -35px;
-            width: 100%;
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--verde-salvia);
-            letter-spacing: 1px;
-            animation: bounce 1.5s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="envelope-wrapper" id="envelopeWrapper">
-        <div class="envelope" id="envelope">
-            <div class="wax-seal">
-                <span>M & M</span>
-            </div>
-            <div class="tap-hint">TOCA EL SELLO PARA ABRIR</div>
-        </div>
-
-        <div class="card" id="card">
-            <div class="card-header">
-                <h3>Nuestra Boda</h3>
-            </div>
-            
-            <h1 class="names">Michael <span>&</span> Mayerly</h1>
-            
-            <div class="divider"></div>
-            
-            <p style="font-size: 0.85rem; font-style: italic;">"Con la bendición de Dios y nuestros padres, nos unimos en matrimonio."</p>
-
-            <div class="audio-player">
-                <button class="btn-audio" onclick="toggleAudio()">
-                    <i class="fa-solid fa-music" id="audioIcon"></i> <span id="audioText">Música de fondo</span>
-                </button>
-                <audio id="bgMusic" loop>
-                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-                </audio>
-            </div>
-
-            <div class="date-box">
-                <div class="date">SÁBADO, 19 DE DICIEMBRE DE 2026</div>
-                <div style="font-size: 0.8rem; color: #666; margin-top: 4px;">17:00 HRS</div>
-            </div>
-
-            <div class="timer-grid">
-                <div class="timer-block">
-                    <span class="timer-number" id="days">00</span>
-                    <span class="timer-label">Días</span>
-                </div>
-                <div class="timer-block">
-                    <span class="timer-number" id="hours">00</span>
-                    <span class="timer-label">Horas</span>
-                </div>
-                <div class="timer-block">
-                    <span class="timer-number" id="minutes">00</span>
-                    <span class="timer-label">Min</span>
-                </div>
-                <div class="timer-block">
-                    <span class="timer-number" id="seconds">00</span>
-                    <span class="timer-label">Seg</span>
-                </div>
-            </div>
-
-            <h2 class="section-title">Ubicación</h2>
-            <p style="font-size: 0.9rem; font-weight: 600;">Ceremonia & Recepción</p>
-            <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">Guayaquil, Ecuador</p>
-            
-            <a href="https://maps.google.com" target="_blank" class="btn-action btn-outline">
-                <i class="fa-solid fa-location-dot"></i> Ver en Google Maps
-            </a>
-
-            <h2 class="section-title">Itinerario</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-time">17:00 PM</div>
-                    <div class="timeline-desc">Ceremonia Religiosa</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">18:30 PM</div>
-                    <div class="timeline-desc">Recepción & Cóctel</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">20:00 PM</div>
-                    <div class="timeline-desc">Cena & Brindis</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">21:30 PM</div>
-                    <div class="timeline-desc">Fiesta & Baile</div>
-                </div>
-            </div>
-
-            <h2 class="section-title">Código de Vestimenta</h2>
-            <p style="font-size: 0.85rem; color: #555; margin-bottom: 20px;">
-                <i class="fa-solid fa-user-tie"></i> <strong>Formal / Elegante</strong><br>
-                Reservamos el color blanco exclusivamente para la novia.
-            </p>
-
-            <h2 class="section-title">Confirmar Asistencia</h2>
-            <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">Por favor confirma tu presencia antes del 1 de Noviembre.</p>
-            
-            <a href="https://forms.google.com" target="_blank" class="btn-action">
-                <i class="fa-solid fa-check"></i> Confirmar RSVP
-            </a>
-
-            <div class="divider"></div>
-            <p style="font-size: 0.75rem; color: #888;">¡Esperamos contar con tu presencia en este día tan especial!</p>
-        </div>
-    </div>
-
-    <script>
-        // LÓGICA DE APERTURA DEL SOBRE
-        const envelope = id('envelope');
-        const wrapper = id('envelopeWrapper');
-        let isOpen = false;
-
-        envelope.addEventListener('click', () => {
-            if (!isOpen) {
-                envelope.classList.add('open');
-                isOpen = true;
-                setTimeout(() => {
-                    wrapper.classList.add('expanded');
-                }, 1000);
-            }
-        });
-
-        function id(elementId) {
-            return document.getElementById(elementId);
-        }
-
-        // CONTROL DE AUDIO
-        const music = id('bgMusic');
-        const audioIcon = id('audioIcon');
-        const audioText = id('audioText');
-        let isPlaying = false;
-
-        function toggleAudio() {
-            if (isPlaying) {
-                music.pause();
-                audioIcon.className = 'fa-solid fa-music';
-                audioText.innerText = 'Música de fondo';
-            } else {
-                music.play();
-                audioIcon.className = 'fa-solid fa-pause';
-                audioText.innerText = 'Pausar música';
-            }
-            isPlaying = !isPlaying;
-        }
-
-        // CUENTA REGRESIVA
-        const targetDate = new Date('December 19, 2026 17:00:00').getTime();
-
-        function updateTimer() {
-            const now = new Date().getTime();
-            const difference = targetDate - now;
-
-            if (difference > 0) {
-                const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const s = Math.floor((difference % (1000 * 60)) / 1000);
-
-                id('days').innerText = d < 10 ? '0' + d : d;
-                id('hours').innerText = h < 10 ? '0' + h : h;
-                id('minutes').innerText = m < 10 ? '0' + m : m;
-                id('seconds').innerText = s < 10 ? '0' + s : s;
-            }
-        }
-
-        setInterval(updateTimer, 1000);
-        updateTimer();
-    </script>
-</body>
-</html>
+‎<!DOCTYPE html>
+‎<html lang="es">
+‎<head>
+‎    <meta charset="UTF-8">
+‎    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+‎    <title>Nuestra Boda | Michael & Mayerly</title>
+‎    <!-- Google Fonts -->
+‎    <link rel="preconnect" href="https://fonts.googleapis.com">
+‎    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+‎    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+‎    <!-- FontAwesome Icons -->
+‎    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+‎
+‎    <style>
+‎        :root {
+‎            --gold-primary: #C5A059;
+‎            --gold-light: #E5C88A;
+‎            --gold-dark: #8E6D2F;
+‎            --bg-cream: #FAF7F2;
+‎            --text-dark: #2B2623;
+‎            --text-muted: #6B625B;
+‎            --white: #FFFFFF;
+‎        }
+‎
+‎        * {
+‎            box-sizing: border-box;
+‎            margin: 0;
+‎            padding: 0;
+‎        }
+‎
+‎        body {
+‎            font-family: 'Montserrat', sans-serif;
+‎            background-color: #121212;
+‎            color: var(--text-dark);
+‎            display: flex;
+‎            justify-content: center;
+‎            align-items: center;
+‎            min-height: 100vh;
+‎        }
+‎
+‎        /* CONTENEDOR PRINCIPAL TIPO MÓVIL */
+‎        .mobile-container {
+‎            width: 100%;
+‎            max-width: 430px;
+‎            background-color: var(--bg-cream);
+‎            background-image: radial-gradient(#E5DCCB 0.5px, transparent 0.5px);
+‎            background-size: 16px 16px;
+‎            min-height: 100vh;
+‎            position: relative;
+‎            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+‎            overflow-x: hidden;
+‎        }
+‎
+‎        /* PANTALLA SOBRE (SELLO DE CERA INITIAL) */
+‎        .envelope-screen {
+‎            position: fixed;
+‎            top: 0;
+‎            left: 50%;
+‎            transform: translateX(-50%);
+‎            width: 100%;
+‎            max-width: 430px;
+‎            height: 100vh;
+‎            background: #F4EFE6 url('https://www.transparenttextures.com/patterns/natural-paper.png');
+‎            z-index: 100;
+‎            display: flex;
+‎            flex-direction: column;
+‎            justify-content: center;
+‎            align-items: center;
+‎            transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+‎            cursor: pointer;
+‎        }
+‎
+‎        .envelope-screen.opened {
+‎            transform: translateX(-50%) translateY(-100%);
+‎            opacity: 0;
+‎            pointer-events: none;
+‎        }
+‎
+‎        .wax-seal-btn {
+‎            width: 110px;
+‎            height: 110px;
+‎            background: radial-gradient(circle, #E3C174 0%, #B88E3A 70%, #85611B 100%);
+‎            border-radius: 50%;
+‎            display: flex;
+‎            justify-content: center;
+‎            align-items: center;
+‎            box-shadow: 0 8px 25px rgba(0,0,0,0.3), inset 0 2px 6px rgba(255,255,255,0.6);
+‎            border: 3px solid #D4AF37;
+‎            animation: pulse 2s infinite;
+‎        }
+‎
+‎        @keyframes pulse {
+‎            0% { transform: scale(1); }
+‎            50% { transform: scale(1.05); }
+‎            100% { transform: scale(1); }
+‎        }
+‎
+‎        .wax-seal-btn span {
+‎            font-family: 'Great Vibes', cursive;
+‎            font-size: 3rem;
+‎            color: #4A350D;
+‎            text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+‎        }
+‎
+‎        .tap-text {
+‎            margin-top: 25px;
+‎            font-family: 'Cinzel', serif;
+‎            font-size: 0.8rem;
+‎            letter-spacing: 3px;
+‎            color: var(--gold-dark);
+‎            text-transform: uppercase;
+‎        }
+‎
+‎        /* SECCIONES Y MARCOS */
+‎        .section-card {
+‎            padding: 30px 20px;
+‎            text-align: center;
+‎            position: relative;
+‎        }
+‎
+‎        /* HERO BANNER DE PORTADA */
+‎        .hero-frame {
+‎            position: relative;
+‎            margin: 15px;
+‎            border: 2px solid var(--gold-primary);
+‎            padding: 8px;
+‎            border-radius: 4px;
+‎            background-color: var(--white);
+‎        }
+‎
+‎        .hero-img {
+‎            width: 100%;
+‎            height: 380px;
+‎            object-fit: cover;
+‎            border-radius: 2px;
+‎        }
+‎
+‎        .hero-title-box {
+‎            position: absolute;
+‎            top: 25px;
+‎            left: 50%;
+‎            transform: translateX(-50%);
+‎            width: 85%;
+‎            background: rgba(255, 255, 255, 0.85);
+‎            backdrop-filter: blur(4px);
+‎            padding: 15px 10px;
+‎            border: 1px solid var(--gold-primary);
+‎            text-align: center;
+‎        }
+‎
+‎        .subtitle-sm {
+‎            font-family: 'Cinzel', serif;
+‎            font-size: 0.65rem;
+‎            letter-spacing: 2px;
+‎            color: var(--text-muted);
+‎            text-transform: uppercase;
+‎        }
+‎
+‎        .names-main {
+‎            font-family: 'Great Vibes', cursive;
+‎            font-size: 2.8rem;
+‎            color: var(--gold-dark);
+‎            line-height: 1.1;
+‎            margin: 5px 0;
+‎        }
+‎
+‎        .date-main {
+‎            font-family: 'Cinzel', serif;
+‎            font-size: 0.75rem;
+‎            letter-spacing: 2px;
+‎            color: var(--text-dark);
+‎            font-weight: 600;
+‎        }
+‎
+‎        /* BOTONES FLOTANTES SOBRE IMAGEN */
+‎        .hero-actions {
+‎            display: flex;
+‎            justify-content: center;
+‎            gap: 10px;
+‎            margin-top: 15px;
+‎        }
+‎
+‎        .btn-gold-pill {
+‎            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+‎            color: var(--white);
+‎            border: none;
+‎            padding: 8px 16px;
+‎            border-radius: 20px;
+‎            font-family: 'Cinzel', serif;
+‎            font-size: 0.65rem;
+‎            letter-spacing: 1px;
+‎            text-transform: uppercase;
+‎            cursor: pointer;
+‎            text-decoration: none;
+‎            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+‎        }
+‎
+‎        /* COLUMNAS Y COUNTDOWN */
+‎        .columns-header {
+‎            display: flex;
+‎            justify-content: space-between;
+‎            align-items: center;
+‎            margin: 20px 0 10px;
+‎        }
+‎
+‎        .column-img {
+‎            width: 45px;
+‎            height: auto;
+‎        }
+‎
+‎        .section-heading {
+‎            font-family: 'Great Vibes', cursive;
+‎            font-size: 2.5rem;
+‎            color: var(--gold-dark);
+‎        }
+‎
+‎        .countdown-grid {
+‎            display: flex;
+‎            justify-content: center;
+‎            gap: 15px;
+‎            margin: 20px 0;
+‎        }
+‎
+‎        .count-item {
+‎            text-align: center;
+‎        }
+‎
+‎        .count-number {
+‎            font-family: 'Playfair Display', serif;
+‎            font-size: 1.8rem;
+‎            color: var(--text-dark);
+‎            display: block;
+‎        }
+‎
+‎        .count-label {
+‎            font-family: 'Cinzel', serif;
+‎            font-size: 0.6rem;
+‎            color: var(--text-muted);
+‎            letter-spacing: 1px;
+‎        }
+‎
+‎        /* GALERÍA DE FOTOS "GLIMPSE OF US" */
+‎        .gallery-grid {
+‎            display: grid;
+‎            grid-template-columns: 1fr 1fr;
+‎            gap: 10px;
+‎            padding: 10px;
+‎        }
+‎
+‎        .gallery-img {
+‎            width: 100%;
+‎            height: 180px;
+‎            object-fit: cover;
+‎            border-radius: 4px;
+‎            border: 2px solid var(--white);
+‎            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+‎        }
+‎
+‎        /* LÍNEA DE TIEMPO "OUR JOURNEY" */
+‎        .curtain-header {
+‎            width: 100%;
+‎            max-width: 250px;
+‎            margin: 0 auto 10px;
+‎            display: block;
+‎        }
+‎
+‎        .journey-item {
+‎            margin: 25px 0;
+‎            padding: 0 10px;
+‎        }
+‎
+‎        .journey-year {
+‎            font-family: 'Cinzel', serif;
+‎            font-size: 0.9rem;
+‎            color: var(--gold-primary);
+‎            font-weight: 700;
+‎        }
+‎
+‎        .journey-title {
+‎            font-family: 'Great Vibes', cursive;
+‎            font-size: 2rem;
+‎            color: var(--gold-dark);
+‎            margin: 2px 0;
+‎        }
+‎
+‎        .journey-text {
+‎            font-size: 0.8rem;
+‎            color: var(--text-muted);
+‎            line-height: 1.5;
+‎            font-style: italic;
+‎        }
+‎
+‎        /* ORDEN DE EVENTOS */
+‎        .event-row {
+‎            margin: 20px 0;
+‎            text-align: center;
+‎        }
+‎
+‎        .event-name {
+‎            font-family: 'Great Vibes', cursive;
+‎            font-size: 2.2rem;
+‎            color: var(--gold-dark);
+‎        }
+‎
+‎        .event-desc {
+‎            font-size: 0.78rem;
+‎            color: var(--text-muted);
+‎            margin-top: -2px;
+‎        }
+‎
+‎        /* EVENT DETAILS CON MARCO BARROCO */
+‎        .baroque-frame {
+‎            border: 10px solid transparent;
+‎            border-image: linear-gradient(to bottom right, var(--gold-light), var(--gold-dark)) 1;
+‎            padding: 25px 15px;
+‎            background: var(--white);
+‎            margin: 20px 10px;
+‎            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+‎        }
+‎
+‎        .chandelier-icon {
+‎            font-size: 2.5rem;
+‎            color: var(--gold-primary);
+‎            margin-bottom: 10px;
+‎        }
+‎
+‎        /* VESTIMENTA Y FORMULARIO RSVP */
+‎        .dresscode-img {
+‎            width: 100%;
+‎            max-width: 320px;
+‎            margin: 15px auto;
+‎            display: block;
+‎        }
+‎
+‎        .rsvp-form {
+‎            display: flex;
+‎            flex-direction: column;
+‎            gap: 12px;
+‎            margin-top: 20px;
+‎            padding: 0 10px;
+‎        }
+‎
+‎        .form-input, .form-select, .form-textarea {
+‎            width: 100%;
+‎            padding: 12px;
+‎            border: 1px solid var(--gold-light);
+‎            border-radius: 4px;
+‎            font-family: 'Montserrat', sans-serif;
+‎            font-size: 0.8rem;
+‎            background-color: var(--white);
+‎            color: var(--text-dark);
+‎            outline: none;
+‎        }
+‎
+‎        .btn-submit {
+‎            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+‎            color: var(--white);
+‎            border: none;
+‎            padding: 14px;
+‎            border-radius: 4px;
+‎            font-family: 'Cinzel', serif;
+‎            font-size: 0.8rem;
+‎            letter-spacing: 2px;
+‎            text-transform: uppercase;
+‎            cursor: pointer;
+‎            margin-top: 10px;
+‎        }
+‎
+‎        /* DIVISOR FLEUR-DE-LIS O LÍNEA DORADA */
+‎        .gold-divider {
+‎            height: 1px;
+‎            background: linear-gradient(to right, transparent, var(--gold-primary), transparent);
+‎            margin: 30px auto;
+‎            width: 70%;
+‎        }
+‎    </style>
+‎</head>
+‎<body>
+‎
+‎    <!-- CONTENEDOR PRINCIPAL ESTILO MÓVIL -->
+‎    <div class="mobile-container">
+‎
+‎        <!-- PANTALLA INICIAL: SOBRE Y SELLO DE CERA -->
+‎        <div class="envelope-screen" id="envelopeScreen" onclick="openEnvelope()">
+‎            <div class="wax-seal-btn">
+‎                <span>M & M</span>
+‎            </div>
+‎            <div class="tap-text">Toca para abrir</div>
+‎        </div>
+‎
+‎        <!-- HERO / PORTADA -->
+‎        <section class="section-card">
+‎            <div class="hero-frame">
+‎                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="Michael y Mayerly" class="hero-img">
+‎                <div class="hero-title-box">
+‎                    <div class="subtitle-sm">Nos casamos</div>
+‎                    <h1 class="names-main">Michael & Mayerly</h1>
+‎                    <div class="date-main">19 DICIEMBRE 2026</div>
+‎                </div>
+‎            </div>
+‎
+‎            <div class="hero-actions">
+‎                <a href="#rsvp" class="btn-gold-pill">Confirmar Asistencia</a>
+‎                <a href="#details" class="btn-gold-pill">Ubicación</a>
+‎            </div>
+‎        </section>
+‎
+‎        <div class="gold-divider"></div>
+‎
+‎        <!-- CUENTA REGRESIVA CON COLUMNAS FLORALES -->
+‎        <section class="section-card">
+‎            <div class="columns-header">
+‎                <svg class="column-img" viewBox="0 0 50 100" fill="var(--gold-primary)">
+‎                    <rect x="10" y="20" width="30" height="70" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+‎                    <path d="M5 20 Q25 5 45 20 Z" fill="currentColor"/>
+‎                </svg>
+‎                <h2 class="section-heading">Countdown</h2>
+‎                <svg class="column-img" viewBox="0 0 50 100" fill="var(--gold-primary)">
+‎                    <rect x="10" y="20" width="30" height="70" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+‎                    <path d="M5 20 Q25 5 45 20 Z" fill="currentColor"/>
+‎                </svg>
+‎            </div>
+‎            <p class="subtitle-sm">Para el día más especial de nuestras vidas</p>
+‎
+‎            <div class="countdown-grid">
+‎                <div class="count-item">
+‎                    <span class="count-number" id="days">00</span>
+‎                    <span class="count-label">DÍAS</span>
+‎                </div>
+‎                <div class="count-item">
+‎                    <span class="count-number" id="hours">00</span>
+‎                    <span class="count-label">HORAS</span>
+‎                </div>
+‎                <div class="count-item">
+‎                    <span class="count-number" id="minutes">00</span>
+‎                    <span class="count-label">MIN</span>
+‎                </div>
+‎                <div class="count-item">
+‎                    <span class="count-number" id="seconds">00</span>
+‎                    <span class="count-label">SEG</span>
+‎                </div>
+‎            </div>
+‎        </section>
+‎
+‎        <div class="gold-divider"></div>
+‎
+‎        <!-- GALERÍA "GLIMPSE OF US" -->
+‎        <section class="section-card">
+‎            <h2 class="section-heading">Glimpse of Us</h2>
+‎            <div class="gallery-grid">
+‎                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=500&q=80" alt="Momento 1" class="gallery-img">
+‎                <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80" alt="Momento 2" class="gallery-img">
+‎                <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=500&q=80" alt="Momento 3" class="gallery-img">
+‎                <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=500&q=80" alt="Momento 4" class="gallery-img">
+‎            </div>
+‎        </section>
+‎
+‎        <div class="gold-divider"></div>
+‎
+‎        <!-- LÍNEA DE TIEMPO "OUR JOURNEY" -->
+‎        <section class="section-card">
+‎            <svg class="curtain-header" viewBox="0 0 200 40">
+‎                <path d="M0 0 C 50 30, 150 30, 200 0 L 200 10 C 150 40, 50 40, 0 10 Z" fill="var(--gold-primary)"/>
+‎            </svg>
+‎            <h2 class="section-heading">Our Journey</h2>
+‎
+‎            <div class="journey-item">
+‎                <div class="journey-year">2022</div>
+‎                <div class="journey-title">A Chance Meeting</div>
+‎                <div class="journey-text">Un encuentro imprevisto que marcó el inicio de nuestra historia juntos.</div>
+‎            </div>
+‎
+‎            <div class="journey-item">
+‎                <div class="journey-year">2024</div>
+‎                <div class="journey-title">The Adventure</div>
+‎                <div class="journey-text">Años llenos de momentos inolvidables, viajes y crecimiento compartido.</div>
+‎            </div>
+‎
+‎            <div class="journey-item">
+‎                <div class="journey-year">2025</div>
+‎                <div class="journey-title">The Yes</div>
+‎                <div class="journey-text">Un "Sí" prometido bajo las estrellas para comenzar a construir nuestro futuro.</div>
+‎            </div>
+‎        </section>
+‎
+‎        <div class="gold-divider"></div>
+‎
+‎        <!-- ORDEN DE EVENTOS "ORDER OF EVENTS" -->
+‎        <section class="section-card">
+‎            <h2 class="section-heading">Order of Events</h2>
+‎            <p class="subtitle-sm" style="margin-bottom: 20px;">NUESTRO DÍA ESPECIAL</p>
+‎
+‎            <div class="event-row">
+‎                <div class="event-name">Ceremony</div>
+‎                <div class="event-desc">Donde dos corazones se unen como uno solo.</div>
+‎            </div>
+‎
+‎            <div class="event-row">
+‎                <div class="event-name">Dinner</div>
+‎                <div class="event-desc">Una velada de amor y momentos compartidos.</div>
+‎            </div>
+‎
+‎            <div class="event-row">
+‎                <div class="event-name">First Dance</div>
+‎                <div class="event-desc">Nuestro primer paso juntos hacia esta nueva etapa.</div>
+‎            </div>
+‎
+‎            <div class="event-row">
+‎                <div class="event-name">Party</div>
+‎                <div class="event-desc">¡Que comience la celebración!</div>
+‎            </div>
+‎        </section>
+‎
+‎        <div class="gold-divider"></div>
+‎
+‎        <!-- DETALLES DEL EVENTO -->
+‎        <section class="section-card" id="details">
+‎            <div class="baroque-frame">
+‎                <i class="fa-solid fa-champagne-glasses chandelier-icon"></i>
+‎                <h2 class="section-heading">Event Details</h2>
+‎                
+‎                <p class="date-main" style="margin: 15px 0 5px;">SÁBADO, 19 DE DICIEMBRE DE 2026</p>
+‎                <p class="subtitle-sm">CEREMONIA: 17:00 PM</p>
+‎
+‎                <div style="margin: 20px 0;">
+‎                    <p style="font-family: 'Playfair Display', serif; font-weight: 600; font-size: 1.1rem;">Guayaquil, Ecuador</p>
+‎                    <p class="journey-text">Recepción & Salón de Eventos</p>
+‎                </div>
+‎
+‎                <a href="https://maps.google.com" target="_blank" class="btn-gold-pill" style="display: block; margin: 10px auto; max-width: 200px;">
+‎                    Abrir en Google Maps
+‎                </a>
+‎            </div>
+‎        </section>
+‎
+‎        <div class="gold-divider"></div>
+‎
+‎        <!-- CÓDIGO DE VESTIMENTA Y CONFIRMACIÓN (RSVP) -->
+‎        <section class="section-card" id="rsvp">
+‎            <div class="subtitle-sm">SE NUESTRO INVITADO</div>
+‎            <h2 class="section-heading">RSVP</h2>
+‎            
+‎            <p class="journey-text" style="margin-bottom: 15px;">
+‎                Por favor confirma tu asistencia antes del 15 de Noviembre de 2026.
+‎            </p>
+‎
+‎            <!-- Ilustración de Código de Vestimenta -->
+‎            <div style="margin: 20px 0;">
+‎                <p class="subtitle-sm">CÓDIGO DE VESTIMENTA: FORMAL / ELEGANTE</p>
+‎                <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=600&q=80" alt="Código de vestimenta" class="dresscode-img">
+‎            </div>
+‎
+‎            <!-- Formulario de RSVP -->
+‎            <form class="rsvp-form" onsubmit="handleRSVP(event)">
+‎                <input type="text" class="form-input" placeholder="Nombre Completo" required>
+‎                
+‎                <select class="form-select" required>
+‎                    <option value="" disabled selected>¿Asistirás a nuestra boda?</option>
+‎                    <option value="yes">Asistiré con gusto</option>
+‎                    <option value="no">Lamentablemente no podré asistir</option>
+‎                </select>
+‎
+‎                <textarea class="form-textarea" rows="3" placeholder="Mensaje para los novios..."></textarea>
+‎
+‎                <button type="submit" class="btn-submit">Enviar RSVP</button>
+‎            </form>
+‎        </section>
+‎
+‎        <!-- FOOTER -->
+‎        <footer style="text-align: center; padding: 30px 10px; background-color: var(--white); border-top: 1px solid var(--gold-light);">
+‎            <h2 class="names-main" style="font-size: 2rem;">Michael & Mayerly</h2>
+‎            <p class="subtitle-sm">¡Esperamos celebrar este gran día contigo!</p>
+‎        </footer>
+‎
+‎    </div>
+‎
+‎    <script>
+‎        // Función para abrir la pantalla del sobre
+‎        function openEnvelope() {
+‎            const envelope = document.getElementById('envelopeScreen');
+‎            envelope.classList.add('opened');
+‎        }
+‎
+‎        // Cuenta regresiva
+‎        const weddingDate = new Date('December 19, 2026 17:00:00').getTime();
+‎
+‎        function updateCountdown() {
+‎            const now = new Date().getTime();
+‎            const distance = weddingDate - now;
+‎
+‎            if (distance > 0) {
+‎                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+‎                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+‎                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+‎                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+‎
+‎                Aquí tienes la explicación de los cambios realizados para que tu carta digital de boda sea idéntica al diseño del video, seguida del código HTML listo para usar:
+‎
+‎### Explicación de las modificaciones basadas en el video:
+‎1. **Sello de cera interactivo:** Se configuró la animación de entrada inicial con un sobre crema texturizado y el sello dorado en el centro. Al tocar el sello, el sobre se abre y revela suavemente toda la invitación.
+‎2. **Encabezado y foto principal:** Incluye el título *"We're Getting Married"*, los nombres en tipografía *script* de lujo (**Michael & Mayerly**), la fecha (22nd November 2026 / o ajustarla a tu preferencia) y la imagen del marco principal con fuente y decoraciones florales doradas.
+‎3. **Sección "Countdown":** Diseñada entre columnas de estilo clásico/romano con los contadores de Días, Horas, Minutos y Segundos.
+‎4. **Sección "Glimpse of Us":** Galería en cuadrícula (*grid*) tipo collage para mostrar fotos de pareja.
+‎5. **Sección "Our Journey":** Línea de tiempo con fechas históricas de su relación (*A Chance Meeting*, *The Adventure*, *The Yes*).
+‎6. **Sección "Order of Events":** Lista estilizada de itinerario (*Ceremony*, *Dinner*, *First Dance*, *Party*, *Farewell*) decorada con cortinas doradas/manta floral.
+‎7. **Sección "Event Details":** Marco ornamentado clásico con lámpara de araña (*chandelier*) que indica el lugar (*Maison Lumière* / Guayaquil) y botones para *"Open in Google Maps"* y *"Add to Calendar"*.
+‎8. **Sección "RSVP & Dress Code":** Ilustración de vestimenta/invitados (*Be Our Guest*), junto con el formulario interactivo para confirmación de asistencia (*Will you be attending?*, *Your full name*, etc.).
+‎
+‎---
+‎
+‎```html
+‎<!DOCTYPE html>
+‎<html lang="es">
+‎<head>
+‎    <meta charset="UTF-8">
+‎    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+‎    <title>Nuestra Boda | Michael & Mayerly</title>
+‎    <!-- Google Fonts -->
+‎    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+‎    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+‎    <link href="[https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap](https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap)" rel="stylesheet">
+‎    <!-- FontAwesome Iconos -->
+‎    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
+‎
+‎    <style>
+‎        :root {
+‎            --marfil: #fbf9f5;
+‎            --dorado: #d4af37;
+‎            --dorado-oscuro: #aa820a;
+‎            --dorado-suave: #f4e8c1;
+‎            --texto-oscuro: #332d27;
+‎            --texto-suave: #665e55;
+‎            --blanco: #ffffff;
+‎        }
+‎
+‎        * {
+‎            box-sizing: border-box;
+‎            margin: 0;
+‎            padding: 0;
+‎        }
+‎
+‎        body {
+‎            font-family: 'Montserrat', sans-serif;
+‎            background-color: #2b2621;
+‎            color: var(--texto-oscuro);
+‎            display: flex;
+‎            justify-content: center;
+‎            align-items: center;
+‎            min-height: 100vh;
+‎            overflow-x: hidden;
+‎        }
+‎
+‎        /* CONTENEDOR PRINCIPAL MOBILE FIRST */
+‎        .phone-container {
+‎            width: 100%;
+‎            max-width: 430px;
+‎            background-color: var(--marfil);
+‎            min-height: 100vh;
+‎            position: relative;
+‎            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+‎            overflow: hidden;
+‎        }
+‎
+‎        /* PANTALLA DE INICIO: SOBRE CON SELLO DE CERA */
+‎        .envelope-screen {
+‎            position: fixed;
+‎            top: 0;
+‎            left: 50%;
+‎            transform: translateX(-50%);
+‎            width: 100%;
+‎            max-width: 430px;
+‎            height: 100vh;
+‎            background-color: #f7f3ed;
+‎            background-image: radial-gradient(#e2d7c5 1px, transparent 1px);
+‎            background-size: 20px 20px;
+‎            z-index: 999;
+‎            display: flex;
+‎            flex-direction: column;
+‎            justify-content: center;
+‎            align-items: center;
+‎            transition: opacity 1s ease, visibility 1s ease;
+‎        }
+‎
+‎        .envelope-screen.opened {
+‎            opacity: 0;
+‎            visibility: hidden;
+‎            pointer-events: none;
+‎        }
+‎
+‎        .wax-seal-btn {
+‎            width: 110px;
+‎            height: 110px;
+‎            background: radial-gradient(circle, #f0d886 0%, var(--dorado) 60%, var(--dorado-oscuro) 100%);
+‎            border-radius: 50%;
+‎            display: flex;
+‎            justify-content: center;
+‎            align-items: center;
+‎            box-shadow: 0 10px 25px rgba(0,0,0,0.3), inset 0 2px 6px rgba(255,255,255,0.6);
+‎            cursor: pointer;
+‎            border: 2px solid #e2bc43;
+‎            transition: transform 0.3s ease, box-shadow 0.3s ease;
+‎            animation: pulse 2s infinite;
+‎        }
+‎
+‎        .wax-seal-btn:hover {
+‎            transform: scale(1.05);
+‎        }
+‎
+‎        .wax-seal-btn span {
+‎            font-family: 'Alex Brush', cursive;
+‎            font-size: 2.8rem;
+‎            color: #4a3804;
+‎            text-shadow: 1px 1px 2px rgba(255,255,255,0.4);
+‎        }
+‎
+‎        .open-hint {
+‎            margin-top: 25px;
+‎            font-family: 'Cinzel', serif;
+‎            font-size: 0.8rem;
+‎            letter-spacing: 3px;
+‎            color: var(--dorado-oscuro);
+‎            text-transform: uppercase;
+‎        }
+‎
+‎        @keyframes pulse {
+‎            0% { transform: scale(1); }
+‎            50% { transform: scale(1.03); }
+‎            100% { transform: scale(1); }
+‎        }
+‎
+‎        /* CONTENIDO DE LA INVITACIÓN */
+‎        .invitation-content {
+‎            padding: 20px;
+‎            background: url('[https://www.transparenttextures.com/patterns/paper-fibers.png](https://www.transparenttextures.com/patterns/paper-fibers.png)');
+‎        }
+‎
+‎        /* 1. SECCIÓN PRINCIPAL / PORTADA */
+‎        .hero-section {
+‎            text-align: center;
+‎            padding: 30px 10px 20px;
+‎            position: relative;
+‎        }
+‎
+‎        .sub-header {
+‎            font-family: 'Cinzel', serif;
+‎            font-size: 0.75rem;
+‎            letter-spacing: 4px;
+‎            text-transform: uppercase;
+‎            color: var(--texto-suave);
+‎            margin-bottom: 10px;
+‎        }
+‎
+‎        .main-title {
+‎            font-family: 'Alex Brush', cursive;
+‎            font-size: 3.5rem;
+‎            color: var(--dorado-oscuro);
+‎            line-height: 1.1;
+‎            margin-bottom: 10px;
+‎        }
+‎
+‎        .event-date-hero {
+‎            font-family: 'Cinzel', serif;
+‎            font-size: 0.85rem;
+‎            letter-spacing: 2px;
+‎            color: var(--texto-oscuro);
+‎            margin-bottom: 20px;
+‎        }
+‎
+‎        .hero-image-frame {
+‎            width: 100%;
+‎            height: 380px;
+‎            border-radius: 180px 180px 10px 10px;
+‎            overflow: hidden;
+‎            border: 2px solid var(--dorado);
+‎            padding: 6px;
+‎            background: var(--blanco);
+‎            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+‎            margin-bottom: 30px;
+‎        }
+‎
+‎        .hero-image-frame img {
+‎            width: 100%;
+‎            height: 100%;
+‎            object-fit: cover;
+‎            border-radius: 175px 175px 6px 6px;
+‎        }
+‎
+‎        /* 2. SECCIÓN CUENTA REGRESIVA */
+‎        .section-box {
+‎            text-align: center;
+‎            margin-bottom: 40px;
+‎            position: relative;
+‎            padding: 20px 10px;
+‎        }
+‎
+‎        .section-title-script {
+‎            font-family: 'Alex Brush', cursive;
+‎            font-size: 2.8rem;
+‎            color: var(--dorado-oscuro);
+‎            margin-bottom: 5px;
+‎        }
+‎
+‎        .section-subtitle {
+‎            font-family: 'Cinzel', serif;
+‎            font-size: 0.7rem;
+‎            letter-spacing: 2px;
+‎            color: var(--texto-suave);
+‎            margin-bottom: 20px;
+‎            text-transform: uppercase;
+‎        }
+‎
+‎        .columns-decor {
+‎            display: flex;
+‎            justify-content: space-between;
+‎            align-items: center;
+‎        }
+‎
+‎        .column-img {
+‎
