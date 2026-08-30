@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestra Boda | Invitación Digital</title>
-    <!-- Google Fonts -->
+    <title>Nuestra Boda | Michael & Mayerly</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- FontAwesome para Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -38,7 +36,7 @@
             overflow-x: hidden;
         }
 
-        /* --- CONTENEDOR DE LA CARTA (ENVELOPE) --- */
+        /* CONTENEDOR DE LA CARTA */
         .envelope-wrapper {
             position: relative;
             width: 100%;
@@ -133,7 +131,7 @@
             pointer-events: none;
         }
 
-        /* --- TARJETA DE INVITACIÓN --- */
+        /* TARJETA DE INVITACIÓN */
         .card {
             position: absolute;
             bottom: 10px;
@@ -182,7 +180,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ESTILOS DEL CONTENIDO DE LA INVITACIÓN */
+        /* CONTENIDO DE LA INVITACIÓN */
         .card-header h3 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 300;
@@ -229,7 +227,7 @@
             color: var(--texto-oscuro);
         }
 
-        /* Audio Player */
+        /* Reproductor de Audio */
         .audio-player {
             margin: 20px 0;
         }
@@ -378,7 +376,6 @@
 <body>
 
     <div class="envelope-wrapper" id="envelopeWrapper">
-        <!-- SOBRE DE CARTA -->
         <div class="envelope" id="envelope">
             <div class="wax-seal">
                 <span>M & M</span>
@@ -386,7 +383,6 @@
             <div class="tap-hint">TOCA EL SELLO PARA ABRIR</div>
         </div>
 
-        <!-- TARJETA PRINCIPAL -->
         <div class="card" id="card">
             <div class="card-header">
                 <h3>Nuestra Boda</h3>
@@ -398,7 +394,6 @@
             
             <p style="font-size: 0.85rem; font-style: italic;">"Con la bendición de Dios y nuestros padres, nos unimos en matrimonio."</p>
 
-            <!-- Reproductor Audio -->
             <div class="audio-player">
                 <button class="btn-audio" onclick="toggleAudio()">
                     <i class="fa-solid fa-music" id="audioIcon"></i> <span id="audioText">Música de fondo</span>
@@ -408,13 +403,11 @@
                 </audio>
             </div>
 
-            <!-- Fecha -->
             <div class="date-box">
                 <div class="date">SÁBADO, 19 DE DICIEMBRE DE 2026</div>
                 <div style="font-size: 0.8rem; color: #666; margin-top: 4px;">17:00 HRS</div>
             </div>
 
-            <!-- Cuenta Regresiva -->
             <div class="timer-grid">
                 <div class="timer-block">
                     <span class="timer-number" id="days">00</span>
@@ -434,7 +427,6 @@
                 </div>
             </div>
 
-            <!-- Ubicaciones -->
             <h2 class="section-title">Ubicación</h2>
             <p style="font-size: 0.9rem; font-weight: 600;">Ceremonia & Recepción</p>
             <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">Guayaquil, Ecuador</p>
@@ -443,7 +435,6 @@
                 <i class="fa-solid fa-location-dot"></i> Ver en Google Maps
             </a>
 
-            <!-- Itinerario -->
             <h2 class="section-title">Itinerario</h2>
             <div class="timeline">
                 <div class="timeline-item">
@@ -464,14 +455,12 @@
                 </div>
             </div>
 
-            <!-- Código de Vestimenta -->
             <h2 class="section-title">Código de Vestimenta</h2>
             <p style="font-size: 0.85rem; color: #555; margin-bottom: 20px;">
                 <i class="fa-solid fa-user-tie"></i> <strong>Formal / Elegante</strong><br>
                 Reservamos el color blanco exclusivamente para la novia.
             </p>
 
-            <!-- Confirmación RSVP -->
             <h2 class="section-title">Confirmar Asistencia</h2>
             <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">Por favor confirma tu presencia antes del 1 de Noviembre.</p>
             
@@ -523,7 +512,7 @@
             isPlaying = !isPlaying;
         }
 
-        // CUENTA REGRESIVA (19 de Diciembre de 2026)
+        // CUENTA REGRESIVA
         const targetDate = new Date('December 19, 2026 17:00:00').getTime();
 
         function updateTimer() {
